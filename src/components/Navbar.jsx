@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import "./navbar.css"; // ⭐ We will create this file
+import "../styles/navbar.css";
 
 function Navbar({ theme, toggleTheme }) {
   const [open, setOpen] = useState(false);
