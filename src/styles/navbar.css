@@ -1,0 +1,76 @@
+.nav {
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--bg-light);
+  color: var(--text-light);
+  border-bottom: 1px solid var(--card-border);
+  position: relative;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  text-decoration: none;
+  color: var(--text-light);
+}
+
+.links-desktop {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--text-light);
+  font-size: 16px;
+}
+
+.toggle-btn {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+/* Hamburger hidden on desktop */
+.menu-btn {
+  background: none;
+  border: none;
+  font-size: 26px;
+  cursor: pointer;
+  display: none;
+}
+
+/* Mobile Menu */
+.menu-mobile {
+  position: absolute;
+  top: 60px;
+  right: 20px;
+  background: var(--bg-light);
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.mobile-link {
+  text-decoration: none;
+  color: var(--text-light);
+  font-size: 16px;
+}
+
+/* ⭐ RESPONSIVE BEHAVIOR */
+@media (max-width: 768px) {
+  .links-desktop {
+    display: none;
+  }
+
+  .menu-btn {
+    display: block;
+  }
+}
