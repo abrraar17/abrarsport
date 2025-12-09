@@ -1,83 +1,120 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
-function Navbar() {
-  // Detect theme from localStorage or default to light
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem("theme") === "dark";
-  });
-
-  // Toggle theme function
-  const toggleTheme = () => {
-    setDarkMode(!darkMode);
-  };
-
-  // Apply theme to body + save preference
-  useEffect(() => {
-    if (darkMode) {
-      document.body.classList.add("dark");
-      localStorage.setItem("theme", "dark");
-    } else {
-      document.body.classList.remove("dark");
-      localStorage.setItem("theme", "light");
-    }
-    const nav = document.querySelector("nav");
-if (nav) {
-  nav.style.background = darkMode ? "var(--bg-dark)" : "var(--bg-light)";
-  nav.style.color = darkMode ? "var(--text-dark)" : "var(--text-light)";
-}
-
-  }, [darkMode]);
+function Navbar({ theme, toggleTheme }) {
+  const [open, setOpen] = useState(false);
 
   return (
-    <nav style={styles.navbar}>
-      <div style={styles.logo}>Abrarsport</div>
+    <nav style={styles.nav}>
+      {/* Logo */}
+      <Link to="/" style={styles.logo}>
+        Abrarsport
+      </Link>
 
-      <div style={styles.links}>
-        <a href="/" style={styles.link}>Home</a>
-        <a href="/projects" style={styles.link}>Projects</a>
-        <a href="/blogs" style={styles.link}>Blogs</a>
-        <a href="/links" style={styles.link}>Links</a>
+      {/* Desktop Menu */}
+      <div style={styles.linksDesktop}>
+        <Link style={styles.link} to="/">Home</Link>
+        <Link style={styles.link} to="/projects">Projects</Link>
+        <Link style={styles.link} to="/blogs">Blogs</Link>
+        <Link style={styles.link} to="/links">Links</Link>
       </div>
 
+      {/* Theme Toggle */}
       <button onClick={toggleTheme} style={styles.toggleBtn}>
-        {darkMode ? "🌙" : "☀️"}
+        {theme === "light" ? "🌙" : "🌞"}
       </button>
+
+      {/* Hamburger Menu Button (Mobile) */}
+      <button onClick={() => setOpen(!open)} style={styles.menuBtn}>
+        ☰
+      </button>
+
+      {/* Mobile Menu */}
+      {open && (
+        <div style={styles.menuMobile}>
+          <Link style={styles.mobileLink} to="/" onClick={() => setOpen(false)}>Home</Link>
+          <Link style={styles.mobileLink} to="/projects" onClick={() => setOpen(false)}>Projects</Link>
+          <Link style={styles.mobileLink} to="/blogs" onClick={() => setOpen(false)}>Blogs</Link>
+          <Link style={styles.mobileLink} to="/links" onClick={() => setOpen(false)}>Links</Link>
+        </div>
+      )}
     </nav>
   );
 }
 
 const styles = {
-  navbar: {
-  display: "flex",
-  justifyContent: "space-between",
-  padding: "16px 24px",
-  alignItems: "center",
-  borderBottom: "1px solid rgba(0,0,0,0.1)",
-  position: "sticky",
-  top: 0,
-  background: "var(--bg-light)",
-  color: "var(--text-light)",
-},
-logo: {
+  nav: {
+    padding: "15px 20px",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "space-between",
+    position: "relative",
+    background: "var(--bg-light)",
+    color: "var(--text-light)",
+    borderBottom: "1px solid var(--card-border)",
+  },
+  logo: {
     fontSize: "20px",
     fontWeight: 700,
-    color: "inherit",         // ← dynamic color
+    textDecoration: "none",
+    color: "var(--text-light)",
   },
-  links: {
+  linksDesktop: {
     display: "flex",
     gap: "20px",
   },
   link: {
     textDecoration: "none",
-    color: "inherit",         // ← dynamic color
+    color: "var(--text-light)",
     fontSize: "16px",
   },
   toggleBtn: {
-    fontSize: "20px",
     background: "none",
     border: "none",
+    fontSize: "22px",
     cursor: "pointer",
-    color: "inherit",         // ← dynamic color
-  }
+    marginLeft: "10px",
+  },
+
+  /* Hamburger Button (only mobile) */
+  menuBtn: {
+    background: "none",
+    border: "none",
+    fontSize: "26px",
+    cursor: "pointer",
+    display: "none",
+  },
+
+  /* Mobile Menu Drawer */
+  menuMobile: {
+    position: "absolute",
+    top: "60px",
+    right: "20px",
+    background: "var(--bg-light)",
+    borderRadius: "10px",
+    boxShadow: "0 4px 14px rgba(0,0,0,0.15)",
+    padding: "15px",
+    display: "flex",
+    flexDirection: "column",
+    gap: "12px",
+    zIndex: 10,
+  },
+  mobileLink: {
+    textDecoration: "none",
+    color: "var(--text-light)",
+    fontSize: "16px",
+  },
 };
+
+/* RESPONSIVE RULES */
+styles["@media (max-width: 768px)"] = {
+  linksDesktop: {
+    display: "none",
+  },
+  menuBtn: {
+    display: "block",
+  },
+};
+
 export default Navbar;
+
