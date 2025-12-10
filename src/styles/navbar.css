@@ -3,16 +3,27 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: var(--bg-light);
+  background: var(--bg-light);      /* Light theme background */
   color: var(--text-light);
-  border-bottom: 1px solid var(--card-border);
+  border-bottom: 1px solid var(--card-border-light);
   position: relative;
+}
+
+/* DARK MODE NAVBAR */
+body.dark .nav {
+  background: var(--bg-light);       /* Overridden by dark variables */
+  color: var(--text-light);
+  border-bottom-color: var(--card-border-light);
 }
 
 .logo {
   font-size: 20px;
   font-weight: 700;
   text-decoration: none;
+  color: var(--text-light);
+}
+
+body.dark .logo {
   color: var(--text-light);
 }
 
@@ -27,6 +38,10 @@
   font-size: 16px;
 }
 
+body.dark .nav-link {
+  color: var(--text-light);
+}
+
 /* ❌ REMOVE OLD TOGGLE BUTTON */
 .toggle-btn {
   display: none;
@@ -36,13 +51,19 @@
 .theme-toggle {
   width: 50px;
   height: 26px;
-  background: var(--card-border);
+  background: var(--card-border-light);
   border-radius: 20px;
   position: relative;
   cursor: pointer;
   margin-left: 10px;
   display: flex;
   align-items: center;
+  transition: background 0.3s ease;
+}
+
+/* Dark mode background for pill */
+body.dark .theme-toggle {
+  background: var(--card-border-light);
 }
 
 .icon-wrapper {
@@ -58,6 +79,11 @@
 
   transition: all 0.35s ease;
   animation: rotateIcon 0.5s ease;
+}
+
+/* Circle in dark mode */
+body.dark .icon-wrapper {
+  background: var(--bg-light);
 }
 
 /* Position depending on theme */
@@ -102,10 +128,19 @@
   gap: 12px;
 }
 
+body.dark .menu-mobile {
+  background: var(--bg-secondary-light);
+  box-shadow: 0 4px 14px rgba(255,255,255,0.1);
+}
+
 .mobile-link {
   text-decoration: none;
   color: var(--text-light);
   font-size: 16px;
+}
+
+body.dark .mobile-link {
+  color: var(--text-light);
 }
 
 /* ⭐ RESPONSIVE BEHAVIOR */
@@ -118,4 +153,5 @@
     display: block;
   }
 }
+
 

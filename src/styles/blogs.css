@@ -1,0 +1,24 @@
+.blogs-container {
+  padding: 40px 20px;
+  text-align: center;
+  background: var(--bg-light);
+  color: var(--text-light);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+body.dark .blogs-container {
+  background: var(--bg-light); /* Dark-mode variable overrides this */
+  color: var(--text-light);
+}
+
+.blogs-title {
+  font-size: 36px;
+  margin-bottom: 30px;
+}
+
+.blogs-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}

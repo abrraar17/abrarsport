@@ -1,55 +1,18 @@
+import "../styles/projectcard.css";
+
 function ProjectCard({ image, title, description, link }) {
   return (
-    <div style={styles.card}>
-      <img src={image} alt={title} style={styles.image} />
+    <div className="project-card">
+      <img src={image} alt={title} className="project-image" />
 
-      <h3 style={styles.title}>{title}</h3>
-      <p style={styles.desc}>{description}</p>
+      <h3 className="project-title">{title}</h3>
+      <p className="project-desc">{description}</p>
 
-      <a href={link} style={styles.button} target="_blank">
+      <a href={link} className="project-btn" target="_blank">
         View Project →
       </a>
     </div>
   );
 }
-
-const styles = {
-  card: {
-    background: "var(--bg-light)",
-    color: "var(--text-light)",
-    borderRadius: "12px",
-    padding: "20px",
-    width: "280px",
-    boxShadow: "0 4px 16px rgba(0,0,0,0.15)",
-    transition: "0.2s",
-  },
-  image: {
-    width: "100%",
-    height: "160px",
-    objectFit: "cover",
-    borderRadius: "8px",
-    marginBottom: "12px",
-  },
-  title: {
-    fontSize: "20px",
-    marginBottom: "6px",
-  },
-  desc: {
-    fontSize: "14px",
-    opacity: 0.85,
-    marginBottom: "16px",
-  },
-  button: {
-    display: "inline-block",
-    marginTop: "10px",
-    textDecoration: "none",
-    background: "var(--accent)",
-    color: "white",
-    padding: "10px 16px",
-    borderRadius: "8px",
-    fontSize: "14px",
-    fontWeight: "600",
-  }
-};
 
 export default ProjectCard;

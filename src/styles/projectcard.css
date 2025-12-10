@@ -1,0 +1,45 @@
+.project-card {
+  background: var(--card-light);
+  color: var(--text-light);
+  border-radius: 12px;
+  padding: 20px;
+  width: 280px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+body.dark .project-card {
+  background: var(--card-light);
+  box-shadow: 0 4px 16px rgba(255,255,255,0.05);
+}
+
+.project-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.project-title {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.project-desc {
+  font-size: 14px;
+  opacity: 0.85;
+  margin-bottom: 16px;
+}
+
+.project-btn {
+  display: inline-block;
+  margin-top: 10px;
+  text-decoration: none;
+  background: var(--accent);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}

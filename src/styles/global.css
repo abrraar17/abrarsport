@@ -1,9 +1,25 @@
 :root {
+  /* Light theme variables */
   --bg-light: #ffffff;
+  --bg-secondary-light: #f7f7f7;
+  --card-light: #ffffff;
+  --card-border-light: #e5e5e5;
+
   --text-light: #111111;
-  --bg-dark: #0d0d0d;
-  --text-dark: #f2f2f2;
+  --text-secondary-light: #555555;
+
   --accent: #3b82f6; /* Blue accent */
+}
+
+/* Dark theme overrides */
+.dark {
+  --bg-light: #0d0d0d;                 /* page background */
+  --bg-secondary-light: #1a1a1a;        /* sections */
+  --card-light: #1a1a1a;               /* cards */
+  --card-border-light: #333333;        /* border on cards */
+
+  --text-light: #f2f2f2;               /* main text */
+  --text-secondary-light: #cccccc;     /* muted text */
 }
 
 body {
@@ -15,7 +31,3 @@ body {
   transition: background 0.3s, color 0.3s;
 }
 
-.dark {
-  background-color: var(--bg-dark);
-  color: var(--text-dark);
-}

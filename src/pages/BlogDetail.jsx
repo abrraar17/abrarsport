@@ -2,6 +2,7 @@ import { useParams } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import { blogs } from "../data/blogs";
 import { useEffect, useState } from "react";
+import "../styles/blogdetail.css";
 
 function BlogDetail() {
   const { id } = useParams();
@@ -16,28 +17,16 @@ function BlogDetail() {
   }, [id]);
 
   return (
-    <div style={styles.container}>
-      <p style={{ opacity: 0.7, marginBottom: "20px" }}>{blog.date}</p>
+    <div className="blog-detail-container">
+      <p className="blog-date">{blog.date}</p>
 
-      <div style={styles.content}>
+      <div className="blog-detail-content">
         <ReactMarkdown>{content}</ReactMarkdown>
       </div>
     </div>
   );
 }
 
-const styles = {
-  container: {
-    padding: "40px 20px",
-    maxWidth: "800px",
-    margin: "0 auto",
-  },
-  content: {
-    marginTop: "30px",
-    lineHeight: "1.7",
-    fontSize: "18px",
-  }
-};
-
 export default BlogDetail;
+
 

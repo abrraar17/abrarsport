@@ -1,12 +1,13 @@
 import LinkCard from "../components/LinkCard";
 import { links } from "../data/links";
+import "../styles/links.css";
 
 function Links() {
   return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>Recommended Links</h1>
+    <div className="links-container">
+      <h1 className="links-title">Recommended Links</h1>
 
-      <div style={styles.grid}>
+      <div className="links-grid">
         {links.map((item, i) => (
           <LinkCard
             key={i}
@@ -21,21 +22,5 @@ function Links() {
   );
 }
 
-const styles = {
-  container: {
-    padding: "40px 20px",
-    textAlign: "center",
-  },
-  title: {
-    fontSize: "36px",
-    marginBottom: "30px",
-  },
-  grid: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "20px",
-    flexWrap: "wrap",
-  }
-};
-
 export default Links;
+

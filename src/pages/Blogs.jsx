@@ -1,12 +1,13 @@
 import BlogCard from "../components/BlogCard";
 import { blogs } from "../data/blogs";
+import "../styles/blogs.css";
 
 function Blogs() {
   return (
-    <div style={styles.container}>
-      <h1 style={styles.title}>Blogs</h1>
+    <div className="blogs-container">
+      <h1 className="blogs-title">Blogs</h1>
 
-      <div style={styles.grid}>
+      <div className="blogs-grid">
         {blogs.map((b, i) => (
           <BlogCard
             key={i}
@@ -21,21 +22,5 @@ function Blogs() {
   );
 }
 
-const styles = {
-  container: {
-    padding: "40px 20px",
-    textAlign: "center",
-  },
-  title: {
-    fontSize: "36px",
-    marginBottom: "30px",
-  },
-  grid: {
-    display: "flex",
-    justifyContent: "center",
-    gap: "20px",
-    flexWrap: "wrap",
-  }
-};
-
 export default Blogs;
+
