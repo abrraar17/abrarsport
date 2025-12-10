@@ -17,10 +17,12 @@ export default async function handler(req, res) {
     .insert([{ path }]);
 
   if (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Insert failed" });
+    console.error("Track error:", error);
+    return res.status(500).json({ error: "Failed to insert visit" });
   }
 
   return res.status(200).json({ success: true });
 }
+
+
 
