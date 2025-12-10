@@ -27,6 +27,15 @@ function App() {
     }
   }, [theme]);
 
+  // ⭐ TRACK VISITOR ON PAGE LOAD
+  useEffect(() => {
+    fetch("/api/track", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ path: window.location.pathname }),
+    }).catch((err) => console.error("Tracking error:", err));
+  }, []);
+
   return (
     <div>
       <Navbar theme={theme} toggleTheme={toggleTheme} />
@@ -43,5 +52,6 @@ function App() {
 }
 
 export default App;
+
 
 

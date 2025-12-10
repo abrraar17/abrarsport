@@ -27,12 +27,56 @@
   font-size: 16px;
 }
 
+/* ❌ REMOVE OLD TOGGLE BUTTON */
 .toggle-btn {
-  background: none;
-  border: none;
-  font-size: 22px;
+  display: none;
+}
+
+/* ⭐ NEW ROTATING SUN/MOON SLIDER TOGGLE */
+.theme-toggle {
+  width: 50px;
+  height: 26px;
+  background: var(--card-border);
+  border-radius: 20px;
+  position: relative;
   cursor: pointer;
   margin-left: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.icon-wrapper {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg-light);
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+
+  transition: all 0.35s ease;
+  animation: rotateIcon 0.5s ease;
+}
+
+/* Position depending on theme */
+.icon-wrapper.light {
+  left: 3px;
+}
+
+.icon-wrapper.dark {
+  left: 25px;
+}
+
+/* ⭐ Rotate animation */
+@keyframes rotateIcon {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Hamburger hidden on desktop */
@@ -74,3 +118,4 @@
     display: block;
   }
 }
+
