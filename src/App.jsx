@@ -6,6 +6,8 @@ import Blogs from "./pages/Blogs";
 import BlogDetail from "./pages/BlogDetail";
 import Links from "./pages/Links";
 import { Routes, Route } from "react-router-dom";
+import Admin from "./pages/Admin";
+
 
 function App() {
   const [theme, setTheme] = useState(
@@ -46,6 +48,7 @@ function App() {
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blogs/:id" element={<BlogDetail />} />
         <Route path="/links" element={<Links />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </div>
   );
