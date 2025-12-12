@@ -7,7 +7,7 @@ function Blogs() {
     <div className="blogs-container">
       <h1 className="blogs-title">Blogs</h1>
 
-      <div className="blog-card">
+      <div className="blogs-grid">
         {blogs.map((b, i) => (
           <BlogCard
             key={i}

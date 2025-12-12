@@ -7,7 +7,7 @@ function Links() {
     <div className="links-container">
       <h1 className="links-title">Recommended Links</h1>
 
-      <div className="link-card">
+      <div className="links-grid">
         {links.map((item, i) => (
           <LinkCard
             key={i}
