@@ -112,3 +112,15 @@ body.dark .admin-project-card {
   color: white;
   cursor: pointer;
 }
+body.dark input,
+body.dark textarea,
+body.dark select {
+  background: #1a1a1a;
+  color: #f2f2f2;
+  border: 1px solid #333;
+}
+
+body.dark input::placeholder,
+body.dark textarea::placeholder {
+  color: #aaa;
+}
