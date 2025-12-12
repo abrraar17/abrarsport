@@ -1,0 +1,26 @@
+.blog-card {
+  background: var(--card-light);
+  color: var(--text-light);
+  border-radius: 12px;
+  padding: 20px;
+  width: 280px;
+  border: 1px solid var(--card-border-light);
+  box-shadow: var(--shadow);
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.blog-title {
+  font-size: 20px;
+  margin-bottom: 6px;
+}
+
+.blog-desc {
+  font-size: 14px;
+  color: var(--text-secondary-light);
+  margin-bottom: 12px;
+}
+
+.blog-date {
+  font-size: 12px;
+  color: var(--text-secondary-light);
+}

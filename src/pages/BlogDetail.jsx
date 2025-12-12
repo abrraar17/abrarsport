@@ -3,6 +3,8 @@ import ReactMarkdown from "react-markdown";
 import { blogs } from "../data/blogs";
 import { useEffect, useState } from "react";
 import "../styles/blogdetail.css";
+import "../styles/blogcard.css";
+
 
 function BlogDetail() {
   const { id } = useParams();
