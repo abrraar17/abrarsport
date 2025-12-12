@@ -10,6 +10,7 @@ const supabase = createClient(
 );
 
 
+
 export default function Admin() {
   const [session, setSession] = useState(null);
   const [projects, setProjects] = useState([]);
