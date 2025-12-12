@@ -1,24 +1,51 @@
+/* links.css */
+
 .links-container {
   padding: 40px 20px;
   text-align: center;
-  background: var(--bg-light);
-  color: var(--text-light);
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-body.dark .links-container {
-  background: var(--bg-light);   /* overridden by dark variable */
-  color: var(--text-light);
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
 .links-title {
   font-size: 36px;
   margin-bottom: 30px;
+  color: var(--text);
 }
 
+/* Grid */
 .links-grid {
   display: flex;
   justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
 }
+
+/* If each link is rendered as a card */
+.link-card {
+  width: 280px;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  transition: transform .15s ease, box-shadow .15s ease;
+}
+
+.link-card:hover {
+  transform: translateY(-6px);
+}
+
+.link-card a {
+  text-decoration: none;
+  color: var(--accent);
+  font-weight: 600;
+}
+
+/* optional description text */
+.link-card p {
+  color: var(--text-secondary);
+}
+

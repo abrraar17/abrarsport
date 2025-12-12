@@ -1,24 +1,66 @@
+/* blogs.css */
+
 .blogs-container {
   padding: 40px 20px;
   text-align: center;
-  background: var(--bg-light);
-  color: var(--text-light);
-  transition: background 0.3s ease, color 0.3s ease;
-}
-
-body.dark .blogs-container {
-  background: var(--bg-light); /* Dark-mode variable overrides this */
-  color: var(--text-light);
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.25s ease, color 0.25s ease;
 }
 
 .blogs-title {
   font-size: 36px;
   margin-bottom: 30px;
+  color: var(--text);
 }
 
+/* Grid of blog cards */
 .blogs-grid {
   display: flex;
   justify-content: center;
   gap: 20px;
   flex-wrap: wrap;
 }
+
+/* If you use a .blog-card class for each item, style it like this */
+.blog-card {
+  width: 320px;
+  text-align: left;
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--card-border);
+  border-radius: 12px;
+  padding: 18px;
+  box-shadow: var(--shadow);
+  transition: transform .15s ease, box-shadow .15s ease, background .15s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-6px);
+}
+
+/* blog-card elements */
+.blog-card .blog-image {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 12px;
+}
+
+.blog-card .blog-title {
+  font-size: 20px;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.blog-card .blog-desc {
+  color: var(--text-secondary);
+  margin-bottom: 12px;
+}
+
+.blog-card .blog-meta {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+

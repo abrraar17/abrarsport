@@ -17,15 +17,20 @@ function Navbar({ theme, toggleTheme }) {
         <Link to="/links" className="nav-link">Links</Link>
       </div>
 
-      {/* ⭐ THE ROTATING SUN/MOON TOGGLE */}
-      <div className="theme-toggle" onClick={toggleTheme}>
-        <div className={`icon-wrapper ${theme}`}>
-          {theme === "light" ? "🌞" : "🌙"}
+      <div className="header-right">
+        {/* Theme Toggle */}
+        <div className="theme-toggle" onClick={toggleTheme}>
+          <div className={`icon-wrapper ${theme === "dark" ? "dark" : "light"}`}>
+            {theme === "light" ? "🌞" : "🌙"}
+          </div>
         </div>
-      </div>
 
-      {/* Hamburger */}
-      <button onClick={() => setOpen(!open)} className="menu-btn">☰</button>
+        {/* Label */}
+        <div className="theme-label">Theme: {theme === "light" ? "Light" : "Dark"}</div>
+
+        {/* Hamburger */}
+        <button onClick={() => setOpen(!open)} className="menu-btn">☰</button>
+      </div>
 
       {/* Mobile Menu */}
       {open && (
@@ -41,6 +46,7 @@ function Navbar({ theme, toggleTheme }) {
 }
 
 export default Navbar;
+
 
 
 

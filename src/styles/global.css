@@ -1,33 +1,106 @@
 :root {
-  /* Light theme variables */
-  --bg-light: #ffffff;
-  --bg-secondary-light: #f7f7f7;
-  --card-light: #ffffff;
+  /* ================================
+     LIGHT THEME (DEFAULT)
+  =================================*/
+  --bg-light: #ffffff;                  /* main page background */
+  --bg-secondary-light: #f7f7f7;        /* sections background */
+  --card-light: #ffffff;                /* cards background */
   --card-border-light: #e5e5e5;
 
   --text-light: #111111;
   --text-secondary-light: #555555;
 
   --accent: #3b82f6; /* Blue accent */
+
+  /* Unified variables (auto switch in dark mode) */
+  --bg: var(--bg-light);
+  --bg-secondary: var(--bg-secondary-light);
+  --card: var(--card-light);
+  --card-border: var(--card-border-light);
+  --text: var(--text-light);
+  --text-secondary: var(--text-secondary-light);
+
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.10);
 }
 
-/* Dark theme overrides */
+/* ================================
+   DARK THEME OVERRIDES
+================================*/
 .dark {
-  --bg-light: #0d0d0d;                 /* page background */
-  --bg-secondary-light: #1a1a1a;        /* sections */
-  --card-light: #1a1a1a;               /* cards */
-  --card-border-light: #333333;        /* border on cards */
+  --bg-light: #0d0d0d;
+  --bg-secondary-light: #1a1a1a;
+  --card-light: #1a1a1a;
+  --card-border-light: #333333;
 
-  --text-light: #f2f2f2;               /* main text */
-  --text-secondary-light: #cccccc;     /* muted text */
+  --text-light: #f2f2f2;
+  --text-secondary-light: #cccccc;
+
+  /* Unified variables update */
+  --bg: var(--bg-light);
+  --bg-secondary: var(--bg-secondary-light);
+  --card: var(--card-light);
+  --card-border: var(--card-border-light);
+  --text: var(--text-light);
+  --text-secondary: var(--text-secondary-light);
+
+  --shadow: 0 6px 18px rgba(0, 0, 0, 0.45);
 }
 
+/* ================================
+   BODY + GLOBAL
+================================*/
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif;
-  background-color: var(--bg-light);
-  color: var(--text-light);
-  transition: background 0.3s, color 0.3s;
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  transition: background 0.3s ease, color 0.3s ease;
 }
+
+/* ================================
+   GLOBAL CARD STYLE (REUSABLE)
+================================*/
+.card {
+  background: var(--card);
+  color: var(--text);
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  padding: 20px;
+  box-shadow: var(--shadow);
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+/* ================================
+   COMMON SECTION CONTAINER
+================================*/
+.section {
+  background: var(--bg-secondary);
+  transition: background 0.3s ease;
+}
+
+/* ================================
+   INPUTS (for admin panel)
+================================*/
+input,
+textarea {
+  background: var(--card);
+  color: var(--text);
+  border: 1px solid var(--card-border);
+  padding: 10px;
+  border-radius: 8px;
+  transition: background 0.3s ease, border 0.3s ease;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+
 
