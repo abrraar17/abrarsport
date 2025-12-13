@@ -9,8 +9,6 @@ const supabase = createClient(
   import.meta.env.VITE_SUPABASE_ANON_KEY
 );
 
-
-
 export default function Admin() {
   const [session, setSession] = useState(null);
   const [projects, setProjects] = useState([]);
@@ -18,29 +16,37 @@ export default function Admin() {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    // initialize session
-    supabase.auth.getSession().then(({ data }) => setSession(data.session ?? null));
+    supabase.auth.getSession().then(({ data }) =>
+      setSession(data.session ?? null)
+    );
 
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      if (session?.user?.email) verifyAdmin(session.user.email);
-    });
+    const { data: listener } = supabase.auth.onAuthStateChange(
+      (_event, session) => {
+        setSession(session);
+        if (session?.user?.email) verifyAdmin(session.user.email);
+      }
+    );
 
     fetchProjects();
 
     return () => {
-      // unsubscribe listener
-      if (listener && listener.subscription) listener.subscription.unsubscribe();
+      if (listener?.subscription) listener.subscription.unsubscribe();
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function fetchProjects() {
     setLoading(true);
-    const res = await fetch("/api/admin/getProjects");
-    const data = await res.json();
-    setProjects(data || []);
-    setLoading(false);
+    try {
+      const res = await fetch("/api/admin/getProjects");
+      const data = await res.json();
+      setProjects(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("fetchProjects error:", err);
+      setProjects([]);
+    } finally {
+      setLoading(false);
+    }
   }
 
   async function signIn() {
@@ -65,6 +71,7 @@ export default function Admin() {
       });
       const json = await res.json();
       setIsAdmin(!!json.isAdmin);
+
       if (!json.isAdmin) {
         alert("Your email is not an admin.");
         await supabase.auth.signOut();
@@ -93,12 +100,18 @@ export default function Admin() {
       <main>
         <section className="admin-actions">
           <h3>Projects</h3>
-          {isAdmin ? <AdminProjectForm onSuccess={fetchProjects} /> : <p>Sign in as admin to manage projects.</p>}
+          {isAdmin ? (
+            <AdminProjectForm onSuccess={fetchProjects} />
+          ) : (
+            <p>Sign in as admin to manage projects.</p>
+          )}
         </section>
 
         <section className="admin-list">
           <h3>Existing Projects</h3>
-          {loading ? <p>Loading...</p> : (
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
             <div className="projects-list">
               {projects.map(p => (
                 <div key={p.id} className="admin-project-card">
@@ -107,16 +120,20 @@ export default function Admin() {
                     <h4>{p.title}</h4>
                     <p>{p.description}</p>
                     <div className="admin-actions-row">
-                      <button onClick={async () => {
-                        const confirmed = confirm("Delete project?");
-                        if (!confirmed) return;
-                        await fetch("/api/admin/deleteProject", {
-                          method: "DELETE",
-                          headers: { "Content-Type": "application/json" },
-                          body: JSON.stringify({ id: p.id })
-                        });
-                        fetchProjects();
-                      }}>Delete</button>
+                      <button
+                        onClick={async () => {
+                          const confirmed = confirm("Delete project?");
+                          if (!confirmed) return;
+                          await fetch("/api/admin/deleteProject", {
+                            method: "DELETE",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({ id: p.id }),
+                          });
+                          fetchProjects();
+                        }}
+                      >
+                        Delete
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -128,3 +145,4 @@ export default function Admin() {
     </div>
   );
 }
+

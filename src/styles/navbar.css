@@ -1,13 +1,14 @@
-/* navbar.css - full file (paste to replace current) */
-
 /* Navbar container */
 .nav {
   padding: 12px 18px;
   display: flex;
   align-items: center;
   gap: 18px;
-  background: transparent;
-  color: var(--text);
+
+  /* ⚫ CHARCOAL NAVBAR */
+  background: #111827; /* slate-900 */
+  color: #ffffff;
+
   position: sticky;
   top: 0;
   z-index: 40;
@@ -17,7 +18,7 @@
 .logo {
   font-size: 20px;
   font-weight: 700;
-  color: var(--text);
+  color: #ffffff;
   text-decoration: none;
 }
 
@@ -28,16 +29,18 @@
   margin-left: 24px;
   align-items: center;
 }
+
 .nav-link {
   text-decoration: none;
-  color: var(--text-secondary);
+  color: rgba(255,255,255,0.75);
   font-size: 15px;
   padding: 8px 10px;
   border-radius: 8px;
 }
+
 .nav-link:hover {
-  color: var(--text);
-  background: rgba(0,0,0,0.04);
+  color: #ffffff;
+  background: rgba(255,255,255,0.08);
 }
 
 /* Header right group */
@@ -52,73 +55,65 @@
 .theme-toggle {
   width: 56px;
   height: 30px;
-  background: var(--card-border);
+  background: rgba(255,255,255,0.12);
   border-radius: 999px;
   position: relative;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   padding: 3px;
-  transition: background .18s ease, border .18s ease;
-  border: 1px solid transparent;
+  border: 1px solid rgba(255,255,255,0.18);
+  transition: background .18s ease;
 }
 
-/* small label next to toggle */
+.theme-toggle:hover {
+  background: rgba(255,255,255,0.18);
+}
+
+/* Label */
 .theme-label {
   font-size: 13px;
   margin-left: 10px;
-  color: var(--text-secondary);
+  color: rgba(255,255,255,0.7);
 }
 
-/* the circular icon inside pill */
+/* Icon */
 .icon-wrapper {
   width: 24px;
   height: 24px;
   border-radius: 50%;
-  background: var(--card);
+  background: #ffffff;
+  color: #111827;
+
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 14px;
+
   position: absolute;
   top: 3px;
   left: 3px;
+
   transition:
     left .28s cubic-bezier(.2,.9,.2,1),
-    transform .35s ease,
-    background .2s ease;
-  box-shadow: 0 4px 10px rgba(2,6,23,0.12);
+    transform .35s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.35);
 }
 
-/* position depending on theme (light = left, dark = right) */
-.icon-wrapper.light {
-  left: 3px;
-}
+.icon-wrapper.light { left: 3px; }
 .icon-wrapper.dark {
   left: 29px;
   transform: rotate(360deg);
 }
 
-/* rotate animation (used on state change) */
-@keyframes rotateIcon {
-  from { transform: rotate(0deg); }
-  to   { transform: rotate(360deg); }
-}
-
-/* Hover feedback */
-.theme-toggle:hover { filter: brightness(1.03); }
-
-/* Hide any old toggle button if present */
-.toggle-btn { display: none; }
-
-/* Hamburger (mobile) */
+/* Hamburger */
 .menu-btn {
   background: none;
   border: none;
   font-size: 22px;
   cursor: pointer;
   display: none;
-  color: var(--text);
+  color: #ffffff;
 }
 
 /* Mobile Menu */
@@ -126,43 +121,34 @@
   position: absolute;
   top: 60px;
   right: 20px;
-  background: var(--card);
+  background: #111827;
   border-radius: 10px;
-  box-shadow: 0 8px 30px rgba(2,6,23,0.12);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
   padding: 12px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  border: 1px solid var(--card-border);
 }
 
 .mobile-link {
   text-decoration: none;
-  color: var(--text);
+  color: #ffffff;
   font-size: 16px;
 }
 
-/* Dark-mode overrides for mobile menu */
-body.dark .menu-mobile {
-  background: var(--card);
-  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
-}
-
-body.dark .mobile-link {
-  color: var(--text);
-}
-
-/* subtle backdrop while scrolled */
+/* Scrolled */
 .nav.scrolled {
+  background: rgba(17,24,39,0.95);
   backdrop-filter: blur(6px);
-  background: rgba(0,0,0,0.04);
 }
 
-/* Responsive behavior */
+/* Responsive */
 @media (max-width: 768px) {
   .links-desktop { display: none; }
   .menu-btn { display: block; }
   .theme-label { display: none; }
 }
+
+
 
 

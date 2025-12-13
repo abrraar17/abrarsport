@@ -7,7 +7,7 @@ function Navbar({ theme, toggleTheme }) {
 
   return (
     <nav className="nav">
-      <Link to="/" className="logo">Abrarsport</Link>
+      <Link to="/" className="logo">Digital Forge</Link>
 
       {/* Desktop Links */}
       <div className="links-desktop">
@@ -26,7 +26,9 @@ function Navbar({ theme, toggleTheme }) {
         </div>
 
         {/* Label */}
-        <div className="theme-label">Theme: {theme === "light" ? "Light" : "Dark"}</div>
+        <div className="theme-label">
+          Theme: {theme === "light" ? "Light" : "Dark"}
+        </div>
 
         {/* Hamburger */}
         <button onClick={() => setOpen(!open)} className="menu-btn">☰</button>
