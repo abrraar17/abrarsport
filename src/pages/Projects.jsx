@@ -37,7 +37,7 @@ function Projects() {
         {projects.map((proj) => (
           <ProjectCard
             key={proj.id}
-            image={proj.image}
+            image={proj.image_url}
             title={proj.title}
             description={proj.description}
             link={proj.live_url || proj.github_url}
