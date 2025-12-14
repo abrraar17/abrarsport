@@ -7,36 +7,40 @@ function Projects() {
 
   useEffect(() => {
     fetch("/api/admin/getProjects")
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data)) setProjects(data);
-        else setProjects([]);
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch projects");
+        }
+        return res.json();
       })
-      .catch(() => setProjects([]))
-      .finally(() => setLoading(false));
+      .then((data) => {
+        setProjects(data);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setLoading(false);
+      });
   }, []);
-
-  if (loading) {
-    return (
-      <div style={styles.container}>
-        <h1 style={styles.title}>Projects</h1>
-        <p>Loading...</p>
-      </div>
-    );
-  }
 
   return (
     <div style={styles.container}>
       <h1 style={styles.title}>Projects</h1>
 
+      {loading && <p>Loading projects...</p>}
+
+      {!loading && projects.length === 0 && (
+        <p>No projects available.</p>
+      )}
+
       <div style={styles.grid}>
         {projects.map((proj) => (
           <ProjectCard
             key={proj.id}
-            image={proj.image_url}
+            image={proj.image}
             title={proj.title}
             description={proj.description}
-            link={proj.live_url}
+            link={proj.live_url || proj.github_url}
           />
         ))}
       </div>
@@ -62,4 +66,3 @@ const styles = {
 };
 
 export default Projects;
-

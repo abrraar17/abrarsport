@@ -11,19 +11,14 @@ export default function AdminProjectForm({ onSuccess }) {
   const [uploading, setUploading] = useState(false);
 
   async function uploadImage() {
-    if (!imageFile) {
-      throw new Error("No image selected");
-    }
-
+    if (!imageFile) return null;
     const file = imageFile;
     const reader = new FileReader();
-
     return new Promise((resolve, reject) => {
       reader.onload = async () => {
+        const base64 = reader.result.split(",")[1];
+        const contentType = file.type || "image/jpeg";
         try {
-          const base64 = reader.result.split(",")[1];
-          const contentType = file.type || "image/jpeg";
-
           const res = await fetch("/api/admin/uploadImage", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -33,24 +28,13 @@ export default function AdminProjectForm({ onSuccess }) {
               contentType,
             }),
           });
-
-          if (!res.ok) {
-            throw new Error("Image upload failed");
-          }
-
           const json = await res.json();
-
-          if (!json.path) {
-            throw new Error("No public image URL returned");
-          }
-
-          resolve(json.path);
+          resolve(json.path || null);
         } catch (err) {
           reject(err);
         }
       };
-
-      reader.onerror = () => reject(new Error("File reading failed"));
+      reader.onerror = reject;
       reader.readAsDataURL(file);
     });
   }
@@ -58,10 +42,8 @@ export default function AdminProjectForm({ onSuccess }) {
   async function handleSubmit(e) {
     e.preventDefault();
     setUploading(true);
-
     try {
       const imagePath = await uploadImage();
-
       const res = await fetch("/api/admin/createProject", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -74,23 +56,18 @@ export default function AdminProjectForm({ onSuccess }) {
           image_path: imagePath,
         }),
       });
-
-      if (!res.ok) {
-        throw new Error("Create project failed");
-      }
-
+      if (!res.ok) throw new Error("Create project failed");
       setTitle("");
       setDesc("");
       setTech("");
       setGithub("");
       setLive("");
       setImageFile(null);
-
       onSuccess?.();
-      alert("Project created successfully.");
+      alert("Project created.");
     } catch (err) {
       console.error(err);
-      alert(err.message || "Failed to create project");
+      alert("Failed to create project");
     } finally {
       setUploading(false);
     }
@@ -104,39 +81,32 @@ export default function AdminProjectForm({ onSuccess }) {
         onChange={(e) => setTitle(e.target.value)}
         required
       />
-
       <textarea
         placeholder="Description"
         value={desc}
         onChange={(e) => setDesc(e.target.value)}
         required
       />
-
       <input
         placeholder="Tech stack (comma separated)"
         value={tech}
         onChange={(e) => setTech(e.target.value)}
       />
-
       <input
         placeholder="GitHub URL"
         value={github}
         onChange={(e) => setGithub(e.target.value)}
       />
-
       <input
         placeholder="Live URL"
         value={live}
         onChange={(e) => setLive(e.target.value)}
       />
-
       <input
         type="file"
         accept="image/*"
         onChange={(e) => setImageFile(e.target.files[0])}
-        required
       />
-
       <button type="submit" disabled={uploading}>
         {uploading ? "Uploading..." : "Create Project"}
       </button>
