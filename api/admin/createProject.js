@@ -21,7 +21,7 @@ export default async function handler(req, res) {
       image_path, // this MUST be full public URL
     } = req.body;
 
-    if (!title || !description) {
+    if (!title || !description || !image_path) {
       return res.status(400).json({ error: "Missing required fields" });
     }
 
