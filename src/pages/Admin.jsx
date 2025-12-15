@@ -14,6 +14,7 @@ export default function Admin() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
+  const [editingProject, setEditingProject] = useState(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) =>
@@ -32,7 +33,6 @@ export default function Admin() {
     return () => {
       if (listener?.subscription) listener.subscription.unsubscribe();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function fetchProjects() {
@@ -99,7 +99,7 @@ export default function Admin() {
 
       <main>
         <section className="admin-actions">
-          <h3>Projects</h3>
+          <h3>Create Project</h3>
           {isAdmin ? (
             <AdminProjectForm onSuccess={fetchProjects} />
           ) : (
@@ -109,32 +109,53 @@ export default function Admin() {
 
         <section className="admin-list">
           <h3>Existing Projects</h3>
+
           {loading ? (
             <p>Loading...</p>
           ) : (
             <div className="projects-list">
-              {projects.map(p => (
+              {projects.map((p) => (
                 <div key={p.id} className="admin-project-card">
                   <img src={p.image_url} alt={p.title} />
+
                   <div>
                     <h4>{p.title}</h4>
                     <p>{p.description}</p>
+
                     <div className="admin-actions-row">
+                      <button onClick={() => setEditingProject(p)}>
+                        Edit
+                      </button>
+
                       <button
                         onClick={async () => {
                           const confirmed = confirm("Delete project?");
                           if (!confirmed) return;
+
                           await fetch("/api/admin/deleteProject", {
                             method: "DELETE",
                             headers: { "Content-Type": "application/json" },
                             body: JSON.stringify({ id: p.id }),
                           });
+
                           fetchProjects();
                         }}
                       >
                         Delete
                       </button>
                     </div>
+
+                    {editingProject?.id === p.id && (
+                      <AdminProjectForm
+                        mode="edit"
+                        initialData={editingProject}
+                        onCancel={() => setEditingProject(null)}
+                        onSuccess={() => {
+                          setEditingProject(null);
+                          fetchProjects();
+                        }}
+                      />
+                    )}
                   </div>
                 </div>
               ))}
@@ -145,4 +166,5 @@ export default function Admin() {
     </div>
   );
 }
+
 
