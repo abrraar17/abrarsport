@@ -3,7 +3,7 @@ function Home() {
     <div style={styles.container}>
       <h1 style={styles.title}>Hello, I’m Abrar 👋</h1>
       <p style={styles.subtitle}>
-         this is a modern digital space showcasing my projects, blogs, and tools.
+         A personal space for my projects, blogs, and useful recommendations.
       </p>
 
       <div style={styles.buttons}>
