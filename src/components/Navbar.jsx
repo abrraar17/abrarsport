@@ -7,7 +7,7 @@ function Navbar({ theme, toggleTheme }) {
 
   return (
     <nav className="nav">
-      <Link to="/" className="logo">Digital Forge</Link>
+      <Link to="/" className="logo"> ByAbrar </Link>
 
       {/* Desktop Links */}
       <div className="links-desktop">
