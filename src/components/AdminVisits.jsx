@@ -21,6 +21,16 @@ export default function AdminVisits() {
       });
   }, []);
 
+  function shortAgent(ua) {
+    if (!ua) return "-";
+    if (ua.includes("Android")) return "Android";
+    if (ua.includes("iPhone")) return "iPhone";
+    if (ua.includes("Windows")) return "Windows";
+    if (ua.includes("Mac")) return "Mac";
+    if (ua.includes("Linux")) return "Linux";
+    return "Other";
+  }
+
   return (
     <div>
       <h3>Site Visits</h3>
@@ -34,20 +44,29 @@ export default function AdminVisits() {
           <thead>
             <tr>
               <th style={th}>#</th>
-              <th style={th}>Visited At</th>
+              <th style={th}>Time</th>
               <th style={th}>Page</th>
+              <th style={th}>IP Address</th>
+              <th style={th}>Device</th>
             </tr>
           </thead>
+
           <tbody>
             {visits.map((v, i) => (
               <tr key={v.id || i}>
                 <td style={td}>{i + 1}</td>
+
                 <td style={td}>
                   {v.created_at
                     ? new Date(v.created_at).toLocaleString()
                     : "-"}
                 </td>
-                <td style={td}>{v.page || "-"}</td>
+
+                <td style={td}>{v.path || "-"}</td>
+
+                <td style={td}>{v.ip_address || "-"}</td>
+
+                <td style={td}>{shortAgent(v.user_agent)}</td>
               </tr>
             ))}
           </tbody>
