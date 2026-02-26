@@ -7,7 +7,7 @@ function Links() {
   const [links, setLinks] = useState([]);
 
   useEffect(() => {
-    fetch("/api/admin/getLinks")
+    fetch("/api/admin/links")
       .then((r) => r.json())
       .then((data) => setLinks(Array.isArray(data) ? data : []));
   }, []);

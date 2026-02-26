@@ -22,14 +22,14 @@ export default function AdminLinkForm({ onSuccess, mode = "add", initialData = n
     setLoading(true);
     try {
       if (mode === "edit") {
-        const res = await fetch("/api/admin/updateLink", {
+        const res = await fetch("/api/admin/links", {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ id: initialData.id, ...form }),
         });
         if (!res.ok) throw new Error("Failed to update link");
       } else {
-        const res = await fetch("/api/admin/addLink", {
+        const res = await fetch("/api/admin/links", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(form),

@@ -44,7 +44,7 @@ export default function Admin() {
   async function fetchProjects() {
     setLoading(true);
     try {
-      const res = await fetch("/api/admin/getProjects");
+      const res = await fetch("/api/admin/projects");
       const data = await res.json();
       setProjects(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -57,7 +57,7 @@ export default function Admin() {
 
   async function fetchLinks() {
     try {
-      const res = await fetch("/api/admin/getLinks");
+      const res = await fetch("/api/admin/links");
       const data = await res.json();
       setLinks(Array.isArray(data) ? data : []);
     } catch (err) {
@@ -154,7 +154,7 @@ export default function Admin() {
                               const confirmed = confirm("Delete project?");
                               if (!confirmed) return;
 
-                              await fetch("/api/admin/deleteProject", {
+                              await fetch("/api/admin/projects", {
                                 method: "DELETE",
                                 headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify({ id: p.id }),
@@ -210,7 +210,7 @@ export default function Admin() {
                         <button
                           onClick={async () => {
                             if (!confirm("Delete this link?")) return;
-                            await fetch("/api/admin/deleteLink", {
+                            await fetch("/api/admin/links", {
                               method: "DELETE",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify({ id: l.id }),
@@ -246,6 +246,5 @@ export default function Admin() {
     </div>
   );
 }
-
 
 

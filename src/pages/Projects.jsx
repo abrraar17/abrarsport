@@ -6,7 +6,7 @@ function Projects() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/admin/getProjects")
+    fetch("/api/admin/projects")
       .then((res) => {
         if (!res.ok) {
           throw new Error("Failed to fetch projects");

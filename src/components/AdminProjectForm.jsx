@@ -15,7 +15,6 @@ export default function AdminProjectForm({
   const [imageFile, setImageFile] = useState(null);
   const [uploading, setUploading] = useState(false);
 
-  // Pre-fill fields in edit mode
   useEffect(() => {
     if (mode === "edit" && initialData) {
       setTitle(initialData.title || "");
@@ -82,16 +81,11 @@ export default function AdminProjectForm({
         payload.id = initialData.id;
       }
 
-      const res = await fetch(
-        mode === "edit"
-          ? "/api/admin/updateProject"
-          : "/api/admin/createProject",
-        {
-          method: mode === "edit" ? "PUT" : "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-        }
-      );
+      const res = await fetch("/api/admin/projects", {
+        method: mode === "edit" ? "PUT" : "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
 
       if (!res.ok) throw new Error("Submit failed");
 
@@ -173,5 +167,3 @@ export default function AdminProjectForm({
     </form>
   );
 }
-
-
