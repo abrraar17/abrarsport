@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import AdminProjectForm from "../components/AdminProjectForm";
+import AdminLinkForm from "../components/AdminLinkForm";
 import AdminVisits from "../components/AdminVisits";
 import "../styles/admin.css";
 
@@ -13,6 +14,7 @@ const supabase = createClient(
 export default function Admin() {
   const [session, setSession] = useState(null);
   const [projects, setProjects] = useState([]);
+  const [links, setLinks] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
@@ -31,6 +33,7 @@ export default function Admin() {
     );
 
     fetchProjects();
+    fetchLinks();
 
     return () => {
       if (listener?.subscription) listener.subscription.unsubscribe();
@@ -48,6 +51,17 @@ export default function Admin() {
       setProjects([]);
     } finally {
       setLoading(false);
+    }
+  }
+
+  async function fetchLinks() {
+    try {
+      const res = await fetch("/api/admin/getLinks");
+      const data = await res.json();
+      setLinks(Array.isArray(data) ? data : []);
+    } catch (err) {
+      console.error("fetchLinks error:", err);
+      setLinks([]);
     }
   }
 
@@ -102,12 +116,9 @@ export default function Admin() {
 
       {isAdmin && (
         <div style={{ marginBottom: "20px" }}>
-          <button onClick={() => setActiveTab("projects")}>
-            Projects
-          </button>
-          <button onClick={() => setActiveTab("visits")}>
-            Visits
-          </button>
+          <button onClick={() => setActiveTab("projects")}>Projects</button>
+          <button onClick={() => setActiveTab("links")}>Links</button>
+          <button onClick={() => setActiveTab("visits")}>Visits</button>
         </div>
       )}
 
@@ -135,9 +146,7 @@ export default function Admin() {
                         <p>{p.description}</p>
 
                         <div className="admin-actions-row">
-                          <button onClick={() => setEditingProject(p)}>
-                            Edit
-                          </button>
+                          <button onClick={() => setEditingProject(p)}>Edit</button>
 
                           <button
                             onClick={async () => {
@@ -146,9 +155,7 @@ export default function Admin() {
 
                               await fetch("/api/admin/deleteProject", {
                                 method: "DELETE",
-                                headers: {
-                                  "Content-Type": "application/json",
-                                },
+                                headers: { "Content-Type": "application/json" },
                                 body: JSON.stringify({ id: p.id }),
                               });
 
@@ -175,6 +182,46 @@ export default function Admin() {
                   ))}
                 </div>
               )}
+            </section>
+          </>
+        )}
+
+        {activeTab === "links" && (
+          <>
+            <section className="admin-actions">
+              <h3>Add Link</h3>
+              <AdminLinkForm onSuccess={fetchLinks} />
+            </section>
+
+            <section className="admin-list">
+              <h3>Existing Links</h3>
+              <div className="projects-list">
+                {links.map((l) => (
+                  <div key={l.id} className="admin-project-card">
+                    <img src={l.image_url} alt={l.title} style={{ width: "80px" }} />
+                    <div>
+                      <h4>{l.title}</h4>
+                      <p>{l.description}</p>
+                      <a href={l.url} target="_blank" rel="noopener noreferrer">{l.url}</a>
+                      <div className="admin-actions-row">
+                        <button
+                          onClick={async () => {
+                            if (!confirm("Delete this link?")) return;
+                            await fetch("/api/admin/deleteLink", {
+                              method: "DELETE",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({ id: l.id }),
+                            });
+                            fetchLinks();
+                          }}
+                        >
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
             </section>
           </>
         )}
