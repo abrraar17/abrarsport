@@ -18,6 +18,7 @@ export default function Admin() {
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
   const [editingProject, setEditingProject] = useState(null);
+  const [editingLink, setEditingLink] = useState(null);
   const [activeTab, setActiveTab] = useState("projects");
 
   useEffect(() => {
@@ -203,7 +204,9 @@ export default function Admin() {
                       <h4>{l.title}</h4>
                       <p>{l.description}</p>
                       <a href={l.url} target="_blank" rel="noopener noreferrer">{l.url}</a>
+
                       <div className="admin-actions-row">
+                        <button onClick={() => setEditingLink(l)}>Edit</button>
                         <button
                           onClick={async () => {
                             if (!confirm("Delete this link?")) return;
@@ -218,6 +221,18 @@ export default function Admin() {
                           Delete
                         </button>
                       </div>
+
+                      {editingLink?.id === l.id && (
+                        <AdminLinkForm
+                          mode="edit"
+                          initialData={editingLink}
+                          onCancel={() => setEditingLink(null)}
+                          onSuccess={() => {
+                            setEditingLink(null);
+                            fetchLinks();
+                          }}
+                        />
+                      )}
                     </div>
                   </div>
                 ))}
