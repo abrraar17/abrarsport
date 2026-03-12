@@ -49,7 +49,7 @@ function Links() {
       </div>
 
       <div className="links-grid">
-        {filtered.map((item) => (
+        {filtered.map((item) =>
 
             key={item.id}
             href={item.url}
