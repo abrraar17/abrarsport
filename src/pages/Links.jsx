@@ -49,8 +49,8 @@ function Links() {
       </div>
 
       <div className="links-grid">
-        {filtered.map((item) =>
-
+        {filtered.map((item) => (
+       <a
             key={item.id}
             href={item.url}
             target="_blank"
@@ -69,4 +69,3 @@ function Links() {
 }
 
 export default Links;
-
