@@ -1,15 +1,36 @@
 function Home() {
   return (
     <div style={styles.container}>
-      <h1 style={styles.title}>Hello, I’m Abrar 👋</h1>
+      <div style={styles.badge}>🚀 Handpicked Deals & Tech Insights</div>
+
+      <h1 style={styles.title}>
+        Your Pilot for <span style={styles.highlight}>Smart Deals</span>
+      </h1>
+
       <p style={styles.subtitle}>
-         A personal space for my projects, blogs, and useful recommendations.
+        Discover the best products, honest blogs, and curated recommendations —
+        all in one place. No fluff, just value.
       </p>
 
       <div style={styles.buttons}>
-        <a href="/projects" style={styles.button}>Projects</a>
-        <a href="/blogs" style={styles.button}>Blogs</a>
-        <a href="/links" style={styles.button}>Links</a>
+        <a href="/links" style={styles.buttonPrimary}>🛒 Shop Deals</a>
+        <a href="/blogs" style={styles.buttonSecondary}>📖 Read Blogs</a>
+        <a href="/projects" style={styles.buttonSecondary}>💻 Projects</a>
+      </div>
+
+      <div style={styles.stats}>
+        <div style={styles.stat}>
+          <span style={styles.statNumber}>100%</span>
+          <span style={styles.statLabel}>Honest Reviews</span>
+        </div>
+        <div style={styles.stat}>
+          <span style={styles.statNumber}>0₹</span>
+          <span style={styles.statLabel}>Extra Cost to You</span>
+        </div>
+        <div style={styles.stat}>
+          <span style={styles.statNumber}>✓</span>
+          <span style={styles.statLabel}>Curated Products</span>
+        </div>
       </div>
     </div>
   );
@@ -21,37 +42,94 @@ const styles = {
     paddingTop: "80px",
     paddingLeft: "20px",
     paddingRight: "20px",
+    paddingBottom: "60px",
+  },
+
+  badge: {
+    display: "inline-block",
+    background: "var(--accent)",
+    color: "white",
+    padding: "6px 16px",
+    borderRadius: "20px",
+    fontSize: "13px",
+    fontWeight: "600",
+    marginBottom: "24px",
+    opacity: 0.9,
   },
 
   title: {
-    fontSize: "42px",
-    fontWeight: "700",
-    marginBottom: "10px",
+    fontSize: "48px",
+    fontWeight: "800",
+    marginBottom: "16px",
+    lineHeight: "1.2",
+  },
+
+  highlight: {
+    color: "var(--accent)",
   },
 
   subtitle: {
     fontSize: "18px",
-    maxWidth: "700px",
+    maxWidth: "600px",
     margin: "0 auto 40px",
-    opacity: 0.8,
+    opacity: 0.75,
+    lineHeight: "1.6",
   },
 
   buttons: {
     display: "flex",
     justifyContent: "center",
-    gap: "20px",
+    gap: "16px",
     marginTop: "20px",
     flexWrap: "wrap",
   },
 
-  button: {
-    padding: "12px 24px",
+  buttonPrimary: {
+    padding: "14px 28px",
     background: "var(--accent)",
     color: "white",
     borderRadius: "8px",
     textDecoration: "none",
     fontSize: "16px",
+    fontWeight: "700",
+  },
+
+  buttonSecondary: {
+    padding: "14px 28px",
+    background: "transparent",
+    color: "var(--accent)",
+    borderRadius: "8px",
+    textDecoration: "none",
+    fontSize: "16px",
     fontWeight: "600",
+    border: "2px solid var(--accent)",
+  },
+
+  stats: {
+    display: "flex",
+    justifyContent: "center",
+    gap: "48px",
+    marginTop: "64px",
+    flexWrap: "wrap",
+  },
+
+  stat: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "4px",
+  },
+
+  statNumber: {
+    fontSize: "28px",
+    fontWeight: "800",
+    color: "var(--accent)",
+  },
+
+  statLabel: {
+    fontSize: "13px",
+    opacity: 0.65,
+    fontWeight: "500",
   },
 };
 

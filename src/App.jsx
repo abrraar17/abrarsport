@@ -1,13 +1,9 @@
 import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
-import Projects from "./pages/Projects";
-import Blogs from "./pages/Blogs";
-import BlogDetail from "./pages/BlogDetail";
 import Links from "./pages/Links";
 import { Routes, Route } from "react-router-dom";
 import Admin from "./pages/Admin";
-
 
 function App() {
   const [theme, setTheme] = useState(
@@ -20,7 +16,6 @@ function App() {
     localStorage.setItem("theme", newTheme);
   };
 
-  // apply theme to document body
   useEffect(() => {
     if (theme === "dark") {
       document.body.classList.add("dark");
@@ -29,7 +24,6 @@ function App() {
     }
   }, [theme]);
 
-  // ⭐ TRACK VISITOR ON PAGE LOAD
   useEffect(() => {
     fetch("/api/track", {
       method: "POST",
@@ -44,9 +38,6 @@ function App() {
 
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/projects" element={<Projects />} />
-        <Route path="/blogs" element={<Blogs />} />
-        <Route path="/blogs/:id" element={<BlogDetail />} />
         <Route path="/links" element={<Links />} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
@@ -55,6 +46,3 @@ function App() {
 }
 
 export default App;
-
-
-
