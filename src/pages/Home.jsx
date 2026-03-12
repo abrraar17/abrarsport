@@ -1,6 +1,17 @@
+import { useEffect, useState } from "react";
+
 function Home() {
+  const [topPicks, setTopPicks] = useState([]);
+
+  useEffect(() => {
+    fetch("/api/admin/links?top_picks=true")
+      .then((r) => r.json())
+      .then((data) => setTopPicks(Array.isArray(data) ? data : []));
+  }, []);
+
   return (
     <div style={styles.container}>
+      {/* Hero Section */}
       <div style={styles.badge}>🚀 Handpicked Deals & Tech Insights</div>
 
       <h1 style={styles.title}>
@@ -30,6 +41,33 @@ function Home() {
           <span style={styles.statLabel}>Curated Products</span>
         </div>
       </div>
+
+      {/* Top Picks Section */}
+      {topPicks.length > 0 && (
+        <div style={styles.topPicksSection}>
+          <h2 style={styles.topPicksTitle}>🔥 Top Picks</h2>
+          <p style={styles.topPicksSubtitle}>Handpicked by DealPilot</p>
+
+          <div style={styles.topPicksGrid}>
+            {topPicks.map((item) => (
+
+                key={item.id}
+                href={item.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={styles.dealCard}
+              >
+                <div style={styles.imageWrapper}>
+                  <img src={item.image_url} alt={item.title} style={styles.dealImage} />
+                </div>
+                <div style={styles.dealLabel}>{item.title}</div>
+              </a>
+            ))}
+          </div>
+
+          <a href="/links" style={styles.viewAll}>View All Deals →</a>
+        </div>
+      )}
     </div>
   );
 }
@@ -117,6 +155,75 @@ const styles = {
     fontSize: "13px",
     opacity: 0.65,
     fontWeight: "500",
+  },
+
+  topPicksSection: {
+    marginTop: "80px",
+    paddingTop: "60px",
+    borderTop: "1px solid rgba(128,128,128,0.2)",
+  },
+
+  topPicksTitle: {
+    fontSize: "32px",
+    fontWeight: "800",
+    marginBottom: "8px",
+  },
+
+  topPicksSubtitle: {
+    fontSize: "15px",
+    opacity: 0.6,
+    marginBottom: "32px",
+  },
+
+  topPicksGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(4, 1fr)",
+    gap: "16px",
+    maxWidth: "1000px",
+    margin: "0 auto",
+  },
+
+  dealCard: {
+    display: "block",
+    borderRadius: "12px",
+    overflow: "hidden",
+    textDecoration: "none",
+    border: "2px solid var(--accent)",
+    transition: "transform 0.2s ease",
+  },
+
+  imageWrapper: {
+    width: "100%",
+    aspectRatio: "1",
+    overflow: "hidden",
+    background: "white",
+  },
+
+  dealImage: {
+    width: "100%",
+    height: "100%",
+    objectFit: "contain",
+    padding: "10px",
+  },
+
+  dealLabel: {
+    background: "var(--accent)",
+    color: "white",
+    textAlign: "center",
+    padding: "10px",
+    fontSize: "11px",
+    fontWeight: "700",
+    textTransform: "uppercase",
+    letterSpacing: "0.5px",
+  },
+
+  viewAll: {
+    display: "inline-block",
+    marginTop: "32px",
+    color: "var(--accent)",
+    fontWeight: "700",
+    fontSize: "15px",
+    textDecoration: "none",
   },
 };
 
