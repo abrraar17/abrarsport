@@ -50,7 +50,7 @@ function Home() {
 
           <div style={styles.topPicksGrid}>
             {topPicks.map((item) => (
-
+<a
                 key={item.id}
                 href={item.url}
                 target="_blank"
