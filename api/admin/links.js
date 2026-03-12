@@ -10,23 +10,25 @@ export default async function handler(req, res) {
 
   try {
     if (method === "GET") {
-      const { data, error } = await supabase
-        .from("links")
-        .select("*")
-        .order("created_at", { ascending: false });
+      const { category, top_picks } = req.query;
 
+      let query = supabase.from("links").select("*").order("created_at", { ascending: false });
+
+      if (category) query = query.eq("category", category);
+      if (top_picks === "true") query = query.eq("is_top_pick", true).limit(4);
+
+      const { data, error } = await query;
       if (error) throw error;
       return res.status(200).json(data);
     }
 
     if (method === "POST") {
-      const { title, description, image_url, url } = req.body;
-      if (!title || !url)
-        return res.status(400).json({ error: "title and url are required" });
+      const { title, description, image_url, url, category, is_top_pick } = req.body;
+      if (!title || !url) return res.status(400).json({ error: "title and url are required" });
 
       const { data, error } = await supabase
         .from("links")
-        .insert([{ title, description, image_url, url }])
+        .insert([{ title, description, image_url, url, category: category || "General", is_top_pick: is_top_pick || false }])
         .select();
 
       if (error) throw error;
@@ -34,12 +36,12 @@ export default async function handler(req, res) {
     }
 
     if (method === "PUT") {
-      const { id, title, description, image_url, url } = req.body;
+      const { id, title, description, image_url, url, category, is_top_pick } = req.body;
       if (!id) return res.status(400).json({ error: "id is required" });
 
       const { error } = await supabase
         .from("links")
-        .update({ title, description, image_url, url })
+        .update({ title, description, image_url, url, category: category || "General", is_top_pick: is_top_pick || false })
         .eq("id", id);
 
       if (error) throw error;
