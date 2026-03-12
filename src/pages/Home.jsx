@@ -8,14 +8,12 @@ function Home() {
       </h1>
 
       <p style={styles.subtitle}>
-        Discover the best products, honest blogs, and curated recommendations —
+        Discover the best products and curated recommendations —
         all in one place. No fluff, just value.
       </p>
 
       <div style={styles.buttons}>
         <a href="/links" style={styles.buttonPrimary}>🛒 Shop Deals</a>
-        <a href="/blogs" style={styles.buttonSecondary}>📖 Read Blogs</a>
-        <a href="/projects" style={styles.buttonSecondary}>💻 Projects</a>
       </div>
 
       <div style={styles.stats}>
@@ -92,17 +90,6 @@ const styles = {
     textDecoration: "none",
     fontSize: "16px",
     fontWeight: "700",
-  },
-
-  buttonSecondary: {
-    padding: "14px 28px",
-    background: "transparent",
-    color: "var(--accent)",
-    borderRadius: "8px",
-    textDecoration: "none",
-    fontSize: "16px",
-    fontWeight: "600",
-    border: "2px solid var(--accent)",
   },
 
   stats: {
