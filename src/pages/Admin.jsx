@@ -18,9 +18,10 @@ export default function Admin() {
   const [activeTab, setActiveTab] = useState("links");
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data }) =>
-      setSession(data.session ?? null)
-    );
+    supabase.auth.getSession().then(({ data }) => {
+      setSession(data.session ?? null);
+      if (data.session?.user?.email) verifyAdmin(data.session.user.email);
+    });
 
     const { data: listener } = supabase.auth.onAuthStateChange(
       (_event, session) => {
@@ -29,12 +30,14 @@ export default function Admin() {
       }
     );
 
-    fetchLinks();
-
     return () => {
       if (listener?.subscription) listener.subscription.unsubscribe();
     };
   }, []);
+
+  useEffect(() => {
+    if (isAdmin) fetchLinks();
+  }, [isAdmin]);
 
   async function fetchLinks() {
     try {
@@ -58,6 +61,7 @@ export default function Admin() {
     await supabase.auth.signOut();
     setSession(null);
     setIsAdmin(false);
+    setLinks([]);
   }
 
   async function verifyAdmin(email) {
@@ -96,72 +100,79 @@ export default function Admin() {
         )}
       </header>
 
-      {isAdmin && (
-        <div style={{ marginBottom: "20px" }}>
-          <button onClick={() => setActiveTab("links")}>Links</button>
-          <button onClick={() => setActiveTab("visits")}>Visits</button>
+      {!isAdmin && (
+        <div style={{ textAlign: "center", marginTop: "60px", opacity: 0.6 }}>
+          <p>Please sign in to access the admin panel.</p>
         </div>
       )}
 
-      <main>
-        {activeTab === "links" && (
-          <>
-            <section className="admin-actions">
-              <h3>Add Link</h3>
-              <AdminLinkForm onSuccess={fetchLinks} />
-            </section>
+      {isAdmin && (
+        <>
+          <div style={{ marginBottom: "20px" }}>
+            <button onClick={() => setActiveTab("links")}>Links</button>
+            <button onClick={() => setActiveTab("visits")}>Visits</button>
+          </div>
 
-            <section className="admin-list">
-              <h3>Existing Links</h3>
-              <div className="projects-list">
-                {links.map((l) => (
-                  <div key={l.id} className="admin-project-card">
-                    <img src={l.image_url} alt={l.title} style={{ width: "80px" }} />
-                    <div>
-                      <h4>{l.title}</h4>
-                      <p>{l.description}</p>
-                      <a href={l.url} target="_blank" rel="noopener noreferrer">{l.url}</a>
+          <main>
+            {activeTab === "links" && (
+              <>
+                <section className="admin-actions">
+                  <h3>Add Link</h3>
+                  <AdminLinkForm onSuccess={fetchLinks} />
+                </section>
 
-                      <div className="admin-actions-row">
-                        <button onClick={() => setEditingLink(l)}>Edit</button>
-                        <button
-                          onClick={async () => {
-                            if (!confirm("Delete this link?")) return;
-                            await fetch("/api/admin/links", {
-                              method: "DELETE",
-                              headers: { "Content-Type": "application/json" },
-                              body: JSON.stringify({ id: l.id }),
-                            });
-                            fetchLinks();
-                          }}
-                        >
-                          Delete
-                        </button>
+                <section className="admin-list">
+                  <h3>Existing Links</h3>
+                  <div className="projects-list">
+                    {links.map((l) => (
+                      <div key={l.id} className="admin-project-card">
+                        <img src={l.image_url} alt={l.title} style={{ width: "80px" }} />
+                        <div>
+                          <h4>{l.title}</h4>
+                          <p>{l.description}</p>
+                          <a href={l.url} target="_blank" rel="noopener noreferrer">{l.url}</a>
+
+                          <div className="admin-actions-row">
+                            <button onClick={() => setEditingLink(l)}>Edit</button>
+                            <button
+                              onClick={async () => {
+                                if (!confirm("Delete this link?")) return;
+                                await fetch("/api/admin/links", {
+                                  method: "DELETE",
+                                  headers: { "Content-Type": "application/json" },
+                                  body: JSON.stringify({ id: l.id }),
+                                });
+                                fetchLinks();
+                              }}
+                            >
+                              Delete
+                            </button>
+                          </div>
+
+                          {editingLink?.id === l.id && (
+                            <AdminLinkForm
+                              mode="edit"
+                              initialData={editingLink}
+                              onCancel={() => setEditingLink(null)}
+                              onSuccess={() => {
+                                setEditingLink(null);
+                                fetchLinks();
+                              }}
+                            />
+                          )}
+                        </div>
                       </div>
-
-                      {editingLink?.id === l.id && (
-                        <AdminLinkForm
-                          mode="edit"
-                          initialData={editingLink}
-                          onCancel={() => setEditingLink(null)}
-                          onSuccess={() => {
-                            setEditingLink(null);
-                            fetchLinks();
-                          }}
-                        />
-                      )}
-                    </div>
+                    ))}
                   </div>
-                ))}
-              </div>
-            </section>
-          </>
-        )}
+                </section>
+              </>
+            )}
 
-        {activeTab === "visits" && <AdminVisits />}
-      </main>
+            {activeTab === "visits" && <AdminVisits />}
+          </main>
+        </>
+      )}
     </div>
   );
 }
-
 
